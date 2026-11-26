@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuraWrite — AI-Powered Content Generation Platform</title>
+  <meta name="description" content="Static demo capstone project demonstrating prompt engineering, content generation, and sentiment analysis." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== Mobile top bar ===== -->
+  <header class="mobile-topbar">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">☰</button>
+    <span class="mobile-brand">✦ NeuraWrite</span>
+  </header>
+
+  <!-- ===== Sidebar ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-logo">✦</div>
+      <div class="brand-text">
+        <h1>NeuraWrite</h1>
+        <p>AI Content Platform</p>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <p class="nav-section">Main</p>
+      <a href="#" class="nav-link active" data-page="dashboard">
+        <span class="nav-icon">📊</span> Dashboard
+      </a>
+      <a href="#" class="nav-link" data-page="generate">
+        <span class="nav-icon">✨</span> Content Generation
+      </a>
+      <a href="#" class="nav-link" data-page="sentiment">
+        <span class="nav-icon">🎭</span> Sentiment Analysis
+      </a>
+      <p class="nav-section">Insights</p>
+      <a href="#" class="nav-link" data-page="prompt">
+        <span class="nav-icon">🧠</span> Prompt Engineering
+      </a>
+      <a href="#" class="nav-link" data-page="analytics">
+        <span class="nav-icon">📈</span> Data Visualization
+      </a>
+      <a href="#" class="nav-link" data-page="history">
+        <span class="nav-icon">🗂️</span> Content History
+      </a>
+      <p class="nav-section">Info</p>
+      <a href="#" class="nav-link" data-page="about">
+        <span class="nav-icon">ℹ️</span> About Project
+      </a>
+    </nav>
+
+    <div class="sidebar-card">
+      <div class="sidebar-card-icon">🎓</div>
+      <h4>B.Tech Capstone</h4>
+      <p>Demonstrating Prompt Engineering &amp; Generative AI concepts with a static interactive demo.</p>
+    </div>
+  </aside>
+
+  <!-- ===== Overlay for mobile sidebar ===== -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ===== Main content ===== -->
+  <main class="main" id="main">
+
+    <!-- ===================== DASHBOARD ===================== -->
+    <section class="page active" id="page-dashboard">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Welcome back, Student 👋</h1>
+          <p class="page-sub">Here is a simulated overview of your AI content activity.</p>
+        </div>
+        <button class="btn btn-primary" data-goto="generate">+ New Generation</button>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">✨</div>
+          <div>
+            <div class="stat-value" data-count="128">0</div>
+            <div class="stat-label">Content Generated</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">🧾</div>
+          <div>
+            <div class="stat-value" data-count="342">0</div>
+            <div class="stat-label">Prompts Used</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:linear-gradient(135deg,#10b981,#34d399)">😊</div>
+          <div>
+            <div class="stat-value"><span data-count="72">0</span>%</div>
+            <div class="stat-label">Positive Sentiment</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:linear-gradient(135deg,#f43f5e,#f97316)">😞</div>
+          <div>
+            <div class="stat-value"><span data-count="11">0</span>%</div>
+            <div class="stat-label">Negative Sentiment</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts row -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <h3>Content Generation Statistics</h3>
+            <span class="badge badge-info">This Week</span>
+          </div>
+          <div class="chart-box"><canvas id="chartDashboardBar"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <h3>Sentiment Analysis Overview</h3>
+            <span class="badge badge-success">Simulated</span>
+          </div>
+          <div class="chart-box"><canvas id="chartDashboardDoughnut"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Recent activity -->
+      <div class="card">
+        <div class="card-head">
+          <h3>Recent Activities</h3>
+          <button class="btn btn-ghost btn-sm" data-goto="history">View all →</button>
+        </div>
+        <ul class="activity-list" id="activityList"></ul>
+      </div>
+    </section>
+
+    <!-- ===================== GENERATE ===================== -->
+    <section class="page" id="page-generate">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">✨ AI Content Generation</h1>
+          <p class="page-sub">Enter a prompt, pick a category and tone, then generate simulated content.</p>
+        </div>
+      </div>
+
+      <div class="notice">
+        <strong>💡 Demo Notice:</strong> This platform is a static demonstration. Outputs shown are predefined samples, not real AI-generated text.
+      </div>
+
+      <div class="grid-2 generate-grid">
+        <!-- Input panel -->
+        <div class="card">
+          <div class="card-head"><h3>Prompt Configuration</h3></div>
+
+          <div class="form-group">
+            <label class="form-label" for="promptInput">Prompt</label>
+            <textarea id="promptInput" class="input" rows="4" placeholder="e.g. A social media caption about a new coffee shop opening"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="categorySelect">Content Category</label>
+            <select id="categorySelect" class="input">
+              <option value="social">📱 Social Media Captions</option>
+              <option value="blog">📝 Blog Articles</option>
+              <option value="marketing">📣 Marketing Content</option>
+              <option value="email">✉️ Emails</option>
+              <option value="product">🛍️ Product Descriptions</option>
+              <option value="education">🎓 Educational Content</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Tone</label>
+            <div class="tone-grid" id="toneGrid">
+              <button class="tone-btn active" data-tone="professional">💼 Professional</button>
+              <button class="tone-btn" data-tone="friendly">😄 Friendly</button>
+              <button class="tone-btn" data-tone="creative">🎨 Creative</button>
+              <button class="tone-btn" data-tone="formal">🎩 Formal</button>
+              <button class="tone-btn" data-tone="casual">☕ Casual</button>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="generateBtn">🚀 Generate Content</button>
+            <button class="btn btn-ghost" id="clearGenBtn">Clear</button>
+          </div>
+        </div>
+
+        <!-- Output panel -->
+        <div class="card output-card">
+          <div class="card-head">
+            <h3>Generated Output</h3>
+            <span class="badge badge-demo">Simulated Output</span>
+          </div>
+
+          <div id="outputArea" class="output-area">
+            <div class="output-placeholder">
+              <div class="placeholder-icon">📄</div>
+              <p>Your generated content will appear here.</p>
+            </div>
+          </div>
+
+          <!-- Loading animation -->
+          <div id="loadingBox" class="loading-box hidden">
+            <div class="ai-loader">
+              <span></span><span></span><span></span>
+            </div>
+            <p class="loading-text">Analyzing prompt &amp; generating content…</p>
+          </div>
+
+          <div class="btn-row hidden" id="outputActions">
+            <button class="btn btn-secondary btn-sm" id="copyGenBtn">📋 Copy</button>
+            <button class="btn btn-ghost btn-sm" id="regenBtn">🔄 Regenerate</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SENTIMENT ===================== -->
+    <section class="page" id="page-sentiment">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">🎭 Sentiment Analysis</h1>
+          <p class="page-sub">Analyze the emotional tone of text using predefined sample results.</p>
+        </div>
+      </div>
+
+      <div class="notice">
+        <strong>💡 Demo Notice:</strong> Sentiment results are matched against predefined sample datasets and keyword rules — no machine learning model is used.
+      </div>
+
+      <div class="grid-2 generate-grid">
+        <div class="card">
+          <div class="card-head"><h3>Text Input</h3></div>
+          <div class="form-group">
+            <label class="form-label" for="sentimentInput">Text to Analyze</label>
+            <textarea id="sentimentInput" class="input" rows="6" placeholder="Paste or type text here, or click a sample below…"></textarea>
+          </div>
+          <p class="form-label">Sample texts:</p>
+          <div class="sample-chips" id="sentimentSamples"></div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="analyzeBtn">🔍 Analyze Sentiment</button>
+            <button class="btn btn-ghost" id="clearSentBtn">Clear</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>Analysis Result</h3>
+            <span class="badge badge-demo">Rule-Based Match</span>
+          </div>
+
+          <div id="sentimentResult" class="sentiment-result empty">
+            <div class="output-placeholder">
+              <div class="placeholder-icon">🎭</div>
+              <p>Sentiment results will appear here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breakdown chart appears after analysis -->
+      <div class="card hidden" id="sentimentChartCard">
+        <div class="card-head"><h3>Sentiment Breakdown</h3></div>
+        <div class="chart-box chart-sm"><canvas id="chartSentimentBreakdown"></canvas></div>
+      </div>
+    </section>
+
+    <!-- ===================== PROMPT ENGINEERING ===================== -->
+    <section class="page" id="page-prompt">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">🧠 Prompt Engineering</h1>
+          <p class="page-sub">Explore prompting techniques with before/after comparisons and simulated outputs.</p>
+        </div>
+      </div>
+
+      <div class="technique-tabs" id="techniqueTabs">
+        <button class="tech-tab active" data-technique="zero-shot">Zero-Shot</button>
+        <button class="tech-tab" data-technique="few-shot">Few-Shot</button>
+        <button class="tech-tab" data-technique="role-based">Role-Based</button>
+        <button class="tech-tab" data-technique="chain-of-thought">Chain-of-Thought</button>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3>Explanation</h3></div>
+          <div id="techniqueExplanation"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Prompt Improvement Example</h3></div>
+          <div id="techniqueExample"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>Try a Sample Prompt</h3></div>
+        <div class="form-group">
+          <select id="samplePromptSelect" class="input"></select>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="improveBtn">✨ Improve Prompt</button>
+          <button class="btn btn-secondary btn-sm" id="copyImprovedBtn">📋 Copy Improved</button>
+        </div>
+
+        <div class="compare-grid">
+          <div class="compare-col">
+            <h4 class="compare-title before">❌ Basic Prompt</h4>
+            <div id="originalPromptBox" class="compare-box">—</div>
+          </div>
+          <div class="compare-col">
+            <h4 class="compare-title after">✅ Improved Prompt</h4>
+            <div id="improvedPromptBox" class="compare-box">Select a sample and click Improve Prompt.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ANALYTICS ===================== -->
+    <section class="page" id="page-analytics">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">📈 Data Visualization</h1>
+          <p class="page-sub">Interactive charts rendered from predefined sample datasets.</p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon" style="background:linear-gradient(135deg,#10b981,#34d399)">😊</div><div><div class="stat-value">72%</div><div class="stat-label">Positive</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">😐</div><div><div class="stat-value">17%</div><div class="stat-label">Neutral</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:linear-gradient(135deg,#f43f5e,#f97316)">😞</div><div><div class="stat-value">11%</div><div class="stat-label">Negative</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">📝</div><div><div class="stat-value">6</div><div class="stat-label">Categories Used</div></div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3>Content Generation by Category</h3></div>
+          <div class="chart-box"><canvas id="chartCategoryBar"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Sentiment Distribution</h3></div>
+          <div class="chart-box"><canvas id="chartSentimentPie"></canvas></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3>Weekly Activity</h3></div>
+          <div class="chart-box"><canvas id="chartWeeklyLine"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Prompt Technique Usage</h3></div>
+          <div class="chart-box"><canvas id="chartTechniqueRadar"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== HISTORY ===================== -->
+    <section class="page" id="page-history">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">🗂️ Content History</h1>
+          <p class="page-sub">Browse predefined sample generation records.</p>
+        </div>
+        <input type="text" class="input history-search" id="historySearch" placeholder="🔎 Search history…" />
+      </div>
+
+      <div id="historyList" class="history-list"></div>
+
+      <!-- Detail modal -->
+      <div class="modal-overlay hidden" id="historyModal">
+        <div class="modal">
+          <div class="modal-head">
+            <h3 id="modalTitle">Record Details</h3>
+            <button class="btn btn-ghost btn-sm" id="closeModalBtn">✕</button>
+          </div>
+          <div class="modal-meta" id="modalMeta"></div>
+          <div class="modal-body" id="modalBody"></div>
+          <div class="btn-row">
+            <button class="btn btn-secondary btn-sm" id="copyHistoryBtn">📋 Copy Content</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section class="page" id="page-about">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">ℹ️ About Project</h1>
+          <p class="page-sub">AI-Powered Content Generation Platform — B.Tech final-year capstone (static demo).</p>
+        </div>
+      </div>
+
+      <div class="card about-hero">
+        <h2>NeuraWrite — AI-Powered Content Generation Platform</h2>
+        <p>This project is an interactive web demonstration of how <strong>Prompt Engineering</strong> and <strong>Generative AI workflows</strong> can power a content-generation product. It covers content creation, sentiment analysis, prompt improvement techniques, and analytics visualization — all simulated on the frontend with predefined data.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3>🎯 Project Objective</h3></div>
+          <p>To demonstrate, through a polished interactive interface, how prompt engineering decisions (category, tone, technique) shape AI content output, and how analytics can visualize such activity.</p>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>🛠️ Technologies Used</h3></div>
+          <ul class="tech-list">
+            <li><span>HTML5</span> Semantic page structure</li>
+            <li><span>CSS3</span> Modern gradients, grid, animations, responsive design</li>
+            <li><span>JavaScript</span> DOM interaction, SPA-style navigation, simulated logic</li>
+            <li><span>Chart.js</span> Bar, pie, doughnut, line &amp; radar charts</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3>⚙️ Project Workflow</h3></div>
+          <ol class="workflow-steps">
+            <li>User selects a module from the sidebar.</li>
+            <li>Prompt + category + tone are captured as inputs.</li>
+            <li>A predefined sample response is matched and displayed with a simulated loading animation.</li>
+            <li>Sentiment module matches text against sample keyword datasets.</li>
+            <li>Analytics page visualizes predefined activity statistics.</li>
+            <li>History page stores and displays predefined sample records.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>🌟 Applications &amp; Benefits</h3></div>
+          <ul class="benefit-list">
+            <li>🧠 Teaches prompt engineering concepts hands-on.</li>
+            <li>✍️ Demonstrates content workflows for marketing teams.</li>
+            <li>🎭 Shows how sentiment analysis pipelines present results.</li>
+            <li>📈 Illustrates AI product analytics dashboards.</li>
+            <li>🎓 Serves as a fully presentable capstone demonstration.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>⚠️ Honesty Disclaimer</h3></div>
+        <p>All AI outputs, sentiment classifications, and analytics figures in this platform are <strong>predefined sample data</strong> simulated with frontend JavaScript. No AI model, API, or machine learning algorithm is running behind the scenes. This is clearly labeled throughout the interface for academic integrity.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">Copied!</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
